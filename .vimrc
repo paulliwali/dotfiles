@@ -75,8 +75,16 @@ Bundle 'vim-pandoc/vim-pandoc'
 
 "" General Settings
 
-" Enable syntax highlighting.
-syntax on
+"Sytax settings
+"Using mustang scheme from http://hcalves.deviantart.com/art/Mustang-Vim-Colorscheme-98974484
+if &t_Co >= 256 || has("gui_running")
+   colorscheme mustang
+endif
+
+if &t_Co > 2 || has("gui_running")
+   " switch syntax highlighting on, when the terminal has colors
+   syntax on
+endif
 
 " Line endings should be Unix-style unless the file is from someone else.
 set fileformat=unix
@@ -88,18 +96,21 @@ filetype plugin indent on
 set autoindent
 set smartindent
 
-" Tabs converted to 4 spaces
+" Default autoindentation to 4 spaces 
 set shiftwidth=4
+" Tabs converted to 4 spaces
 set tabstop=4
+" No wrapping
+set nowrap
 set expandtab
+" Insert tabs on the start of a line according to shiftwidth, not tabstop
 set smarttab
+" Allowing backspace overeverthing in insert mode
 set backspace=indent,eol,start
+" Allowing autoindentation
 set autoindent
+" Allowing line numbers
 set number
-
-" Set up backup dir where the swap files are stored
-"set dir=~/.vim/backup,~/tmp,/tmp
-"set backupdir=~/.vim/backup,~/tmp,/tmp
 
 " Disable the F1 help key
 map <F1> <Esc>
@@ -112,15 +123,11 @@ else
     set list listchars=tab:>-,trail:.,extends:>
 endif
 
-" Don't break up long lines, but visually wrap them.
-set textwidth=0
-set wrap
-
 " Text mode
 command TextMode setlocal nolist wrap linebreak scrolloff=999
 
 " Highlight current line
-"set cursorline
+set cursorline
 
 " http://vim.wikia.com/wiki/Move_cursor_by_display_lines_when_wrapping
 nnoremap <silent> j gj
@@ -134,6 +141,21 @@ set scrolloff=999
 
 " Use UTF-8
 set encoding=utf-8
+
+" For command history and buffer size
+set history = 1000
+set undolevels = 1000
+
+" Silent vim
+set visualbell
+set noerrorbells
+
+" Set vim's terminal title to the filename
+set title
+
+" Remove vim's backup features, as we utilize git already
+set nobackup
+set noswapfiles
 
 " Status line
 set laststatus=2
@@ -195,6 +217,9 @@ set incsearch
 " Ignore case while searching
 set ignorecase
 
+" Ignore case if all search term is lower-case, case-sensitive otherwise
+set smartcase
+
 " Make /g flag default when doing :s
 set gdefault
 
@@ -215,9 +240,6 @@ set matchtime=2
 
 " Split new window below current one
 set splitbelow
-
-" Error bells are displayed visually.
-set visualbell
 
 " Automatically read files which have been changed outside of Vim, if we
 " haven't changed it already.
@@ -422,9 +444,6 @@ let g:is_bash = 1
 
 " Reload all windows in all tabs, useful after I do a 'git rebase -i'
 command Reedit :tabdo windo edit!
-
-" Default color scheme
-set background=dark
 
 " NOTE: On Mac OS X, best used with [iTerm 2](http://www.iterm2.com)
 colorscheme desert
