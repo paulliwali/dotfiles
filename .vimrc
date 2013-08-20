@@ -1,5 +1,5 @@
 " My Vimrc file
-" Maintainer: swaroop@swaroopch.com
+" Maintainer: Paul Deng
 
 "" Vim, not Vi.
 " This must be first, because it changes other options as a side effect.
@@ -9,6 +9,8 @@ filetype off
 
 "" Vundle
 "" See :help vundle for more details
+"" Using vundle instead of pathogen because it incorporates pathogen's sub-module style with git
+"" https://github.com/gmarik/vundle
 set runtimepath+=~/.vim/bundle/vundle/
 call vundle#rc()
 
@@ -24,7 +26,7 @@ Bundle 'gmarik/vundle'
 "Bundle 'nginx.vim'
 "Bundle 'python.vim--Vasiliev'
 "Bundle 'utl.vim'
-Bundle 'paredit.vim'
+"Bundle 'paredit.vim'
 
 " Git Repos on GitHub
 " Inspired from http://sontek.net/turning-vim-into-a-modern-python-ide
@@ -92,6 +94,8 @@ set tabstop=4
 set expandtab
 set smarttab
 set backspace=indent,eol,start
+set autoindent
+set number
 
 " Set up backup dir where the swap files are stored
 "set dir=~/.vim/backup,~/tmp,/tmp
