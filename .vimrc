@@ -143,8 +143,8 @@ set scrolloff=999
 set encoding=utf-8
 
 " For command history and buffer size
-set history = 1000
-set undolevels = 1000
+set history=1000
+set undolevels=1000
 
 " Silent vim
 set visualbell
