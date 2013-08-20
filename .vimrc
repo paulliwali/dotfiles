@@ -152,7 +152,7 @@ set title
 
 " Remove vim's backup features, as we utilize git already
 set nobackup
-set noswapfiles
+set noswapfile
 
 " Status line
 set laststatus=2
