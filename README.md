@@ -12,8 +12,11 @@ ln -sb dotfiles/.bashrc .
 ln -sb dotfiles/.bashrc_custom .
 mv .emacs.d .emacs.d~
 ln -s dotfiles/.emacs.d .
-# Moving vim color schemes into the appropriate folders
-ln -sf dotfiles/.vim/colors/ .
+
+# Moving vim color schemes into the appropriate color folder
+cd .vim
+ln -sf ~/dotfiles/.vim/colors .
+cd $HOME
 ```
 
 See also http://github.com/paulliwali/setup to install prerequisite
