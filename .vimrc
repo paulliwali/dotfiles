@@ -75,16 +75,11 @@ Bundle 'vim-pandoc/vim-pandoc'
 
 "" General Settings
 
-"Sytax settings
-"Using mustang scheme from http://hcalves.deviantart.com/art/Mustang-Vim-Colorscheme-98974484
-if &t_Co >= 256 || has("gui_running")
-   colorscheme mustang
-endif
+" Sytax settings
+" Using custom color schome Mustang from http://hcalves.deviantart.com/art/Mustang-Vim-Colorscheme-98974484?offset=10#comments
+colorscheme Mustang
+syntax on
 
-if &t_Co > 2 || has("gui_running")
-   " switch syntax highlighting on, when the terminal has colors
-   syntax on
-endif
 
 " Line endings should be Unix-style unless the file is from someone else.
 set fileformat=unix
