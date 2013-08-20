@@ -76,9 +76,11 @@ Bundle 'vim-pandoc/vim-pandoc'
 "" General Settings
 
 " Sytax settings
-" Using custom color schome Mustang from http://hcalves.deviantart.com/art/Mustang-Vim-Colorscheme-98974484?offset=10#comments
-colorscheme Mustang
 syntax on
+set t_Co=256
+" Using custom color schome Mustang from http://hcalves.deviantart.com/art/Mustang-Vim-Colorscheme-98974484?offset=10#comments
+colorscheme mustang
+
 
 
 " Line endings should be Unix-style unless the file is from someone else.
