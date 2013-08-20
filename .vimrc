@@ -442,9 +442,6 @@ let g:is_bash = 1
 " Reload all windows in all tabs, useful after I do a 'git rebase -i'
 command Reedit :tabdo windo edit!
 
-" NOTE: On Mac OS X, best used with [iTerm 2](http://www.iterm2.com)
-colorscheme desert
-
 " Mac
 if has('mac')
     set macmeta
