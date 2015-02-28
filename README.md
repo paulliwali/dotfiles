@@ -5,14 +5,11 @@ configure your `bash` and `emacs` and `vim` development environment as follows:
 
 ```sh
 cd $HOME
-git clone https://github.com/startup-class/dotfiles.git
-ln -sb dotfiles/.screenrc .
-ln -sb dotfiles/.bash_profile .
-ln -sb dotfiles/.bashrc .
-ln -sb dotfiles/.bashrc_custom .
-mv .emacs.d .emacs.d~
-ln -s dotfiles/.emacs.d .
-
+git clone ssh://git@github.com/paulliwali/dotfiles.git
+ln -sf dotfiles/.bash_profile .
+ln -sf dotfiles/.bashrc .
+ln -sf dotfiles/.bashrc_custom .
+ln -sf dotfiles/.vimrc .
 # Moving vim color schemes into the appropriate color folder
 cd .vim
 ln -sf ~/dotfiles/.vim/colors .
