@@ -60,6 +60,9 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'mileszs/ack.vim'
 Bundle 'msanders/snipmate.vim'
 Bundle 'nvie/vim-flake8'
+"Automatically run Flake8 everytime a Python file is written
+autocmd BufWritePost *.py call Flake8()
+" Changing hotkey for Flake8
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
@@ -93,14 +96,15 @@ filetype plugin indent on
 set autoindent
 set smartindent
 
+" Lines longer than 79 columns will be broken
+set textwidth=79
 " Default autoindentation to 4 spaces 
 set shiftwidth=4
-" Tabs converted to 4 spaces
+" TABs converted to 4 spaces
 set tabstop=4
-" No wrapping
-set nowrap
+" Insert spaces when hitting TABs 
 set expandtab
-" Insert tabs on the start of a line according to shiftwidth, not tabstop
+" Insert TABs on the start of a line according to shiftwidth, not tabstop
 set smarttab
 " Allowing backspace overeverthing in insert mode
 set backspace=indent,eol,start
