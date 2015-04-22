@@ -83,6 +83,10 @@ Bundle 'tpope/vim-fugitive'
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
+" allows to open a new file without being forced to write or undo your
+" changes on existing files
+set hidden
+
 " Sytax settings
 syntax on
 set t_Co=256
