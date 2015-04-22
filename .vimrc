@@ -93,8 +93,6 @@ set t_Co=256
 " Using custom color schome Mustang from http://hcalves.deviantart.com/art/Mustang-Vim-Colorscheme-98974484?offset=10#comments
 colorscheme mustang
 
-
-
 " Line endings should be Unix-style unless the file is from someone else.
 set fileformat=unix
 au BufNewFile * set fileformat=unix
