@@ -78,6 +78,11 @@ Bundle 'tpope/vim-fugitive'
 
 "" General Settings
 
+" Command settings
+" maps /ev and /sv keys to edit and reload .vimrc
+nmap <silent> <leader>ev :e $MYVIMRC<CR>
+nmap <silent> <leader>sv :so $MYVIMRC<CR>
+
 " Sytax settings
 syntax on
 set t_Co=256
