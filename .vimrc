@@ -11,8 +11,8 @@ filetype off
 "" See :help vundle for more details
 "" Using vundle instead of pathogen because it incorporates pathogen's sub-module style with git
 "" https://github.com/gmarik/vundle
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
 " let Vundle manage Vundle
 " required! by vundle
@@ -22,11 +22,7 @@ Bundle 'gmarik/vundle'
 "Bundle 'Conque-Shell'
 "Bundle 'JSON.vim'
 "Bundle 'calendar.vim--Matsumoto'
-"Bundle 'django.vim'
-"Bundle 'nginx.vim'
 "Bundle 'python.vim--Vasiliev'
-"Bundle 'utl.vim'
-"Bundle 'paredit.vim'
 
 " Git Repos on GitHub
 " Inspired from http://sontek.net/turning-vim-into-a-modern-python-ide
@@ -78,20 +74,9 @@ Bundle 'tpope/vim-fugitive'
 
 "" General Settings
 
-" Command settings
-" maps /ev and /sv keys to edit and reload .vimrc
-nmap <silent> <leader>ev :e $MYVIMRC<CR>
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
-
-" allows to open a new file without being forced to write or undo your
-" changes on existing files
-set hidden
-
 " Sytax settings
 syntax on
 set t_Co=256
-" Using custom color schome Mustang from http://hcalves.deviantart.com/art/Mustang-Vim-Colorscheme-98974484?offset=10#comments
-colorscheme mustang
 
 " Line endings should be Unix-style unless the file is from someone else.
 set fileformat=unix
@@ -103,8 +88,8 @@ filetype plugin indent on
 set autoindent
 set smartindent
 
-" Lines longer than 79 columns will be broken
-set textwidth=79
+" Lines longer than 99 columns will be broken
+set textwidth=99
 " Default autoindentation to 4 spaces 
 set shiftwidth=4
 " TABs converted to 4 spaces
@@ -256,25 +241,11 @@ set autoread
 " Disable highlighting after search. Too distracting.
 set nohlsearch
 
-" To save, ctrl-s.
-nmap <c-s> :w<CR>
-imap <c-s> <Esc>:w<CR>a
-
-" Reformatting options. See `:help fo-table`
-set formatoptions+=lnor1
-
 " Disable spellcheck by default
 set nospell
 autocmd BufRead,BufNewFile * setlocal nospell
 " To enable again, use:
 " setlocal spell spelllang=en_us
-
-" Say a message
-function! Say(msg)
-    echohl IncSearch
-    echo a:msg
-    echohl None
-endfunction
 
 " Copy full buffer to OS clipboard.
 function! CopyAll()
@@ -298,171 +269,18 @@ let g:pandoc_no_folding = 1
 " e.g. gf on [[AnotherPage]] should go to AnotherPage.pd
 set suffixesadd=.pd,.txt
 
-if has('python') " Assumes Python >= 2.6
-
-    " Quick way to open a filename under the cursor in a new tab
-    " (or URL in a browser)
-    function! Open()
-python <<EOF
-import re
-import platform
-import vim
-
-def launch(uri):
-    if platform.system() == 'Darwin':
-        vim.command('!open {}'.format(uri))
-    elif platform.system() == 'Linux':
-        vim.command('!firefox -new-tab {}'.format(uri))
-
-def is_word(text):
-    return re.match(r'^[\w./?%:#&=~+-]+$', text) is not None
-
-filename_start = filename_end = vim.current.window.cursor[1] # (row, col)
-
-while filename_start >= 0 and is_word(vim.current.line[filename_start:filename_start+1]):
-    filename_start -= 1
-filename_start += 1
-
-while filename_end <= len(vim.current.line) and is_word(vim.current.line[filename_end:filename_end+1]):
-    filename_end += 1
-
-filename = vim.current.line[filename_start:filename_end]
-
-if filename.endswith('.md') or filename.endswith('.txt'):
-    vim.command('tabedit {0}'.format(filename))
-
-elif filename.lower().startswith('http') or filename.lower().startswith('www.'):
-    if filename.lower().startswith('www.'):
-        filename = 'http://{0}'.format(filename)
-    filename = filename.replace('#', r'\#').replace('%', r'\%').replace('~', r'\~')
-    launch(filename)
-
-else:
-    launch(filename)
-EOF
-
-    endfunction
-
-    command O call Open()
-    map <Leader>o :call Open()<CR>
-
-" Add the virtualenv's site-packages to vim path
-python << EOF
-import os.path
-import sys
-import vim
-if 'VIRTUAL_ENV' in os.environ:
-    project_base_dir = os.environ['VIRTUAL_ENV']
-    sys.path.insert(0, project_base_dir)
-    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-    execfile(activate_this, dict(__file__=activate_this))
-EOF
-
-endif " python
-
-" Remove the Windows ^M (copied from http://amix.dk/vim/vimrc.html)
-map <Leader>d mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
-
-" See `:help key-notation`
-" Shortcuts for moving between tabs
-" Alt-j to move to the tab to the left
-noremap <A-j> :tabN<CR>
-noremap <D-j> :tabN<CR>
-" Alt-k to move to the tab to the right
-noremap <A-k> :tabn<CR>
-noremap <D-k> :tabn<CR>
-
-" Shortcut for moving between windows
-nnoremap <c-j> :wincmd w<CR>
-
-" Shortcut to insert date
-inoremap <F5> <C-R>=strftime("%a, %d %b %Y")<CR>
-
-" http://items.sjbach.com/319/configuring-vim-right
-" Marks
-nnoremap ' `
-nnoremap ` '
-
-" matchit
-runtime! macros/matchit.vim
-
 " Python
 let python_highlight_all=1
 " PEP8 compliance - http://www.python.org/dev/peps/pep-0008/
 autocmd FileType python set colorcolumn=100
 
-"" Bundle-specific configurations
-
-" Bundle 'VimClojure'
-let g:vimclojure#ParenRainbow = 1
-
-" Bundle 'godlygeek/tabular'
-"command -range AlignFirstEquals :<line1>,<line2>Tabularize /^[^=]*\zs/
-"command -range AlignFirstColon  :<line1>,<line2>Tabularize /^[^:]*\zs/
-
-" Bundle 'scrooloose/nerdtree'
-let NERDTreeIgnore=['\.pyc$', '\.rbc$', '\~$']
-map <Leader>n :NERDTreeToggle<CR>
-
-" Bundle 'mileszs/ack.vim'
-nmap <Leader>a <Esc>:Ack!<space>
-
-" Bundle 'tpope/vim-fugitive'
-" http://vimcasts.org/blog/2011/05/the-fugitive-series/
-autocmd BufReadPost fugitive://* set bufhidden=delete
-
-" Bundle 'scrooloose/syntastic'
-let g:syntastic_enable_signs=1
-
-" XML, HTML
-function TagExpander()
-    if exists("b:did_ftplugin")
-      unlet b:did_ftplugin
-    endif
-    runtime! ftplugin/xml.vim ftplugin/xml_*.vim ftplugin/xml/*.vim
-endfunction
-
-autocmd FileType xml   call TagExpander()
-autocmd FileType html  call TagExpander()
-autocmd FileType eruby call TagExpander()
-autocmd FileType htmljinja call TagExpander()
-autocmd FileType htmldjango call TagExpander()
-
-" Ruby
-autocmd BufRead,BufNewFile {Gemfile,Rakefile,config.ru} setlocal ft=ruby
-autocmd FileType ruby setlocal tabstop=2 shiftwidth=2
-
 " YAML
 autocmd FileType yaml setlocal tabstop=2 shiftwidth=2
-
-" Web
-autocmd FileType json setlocal tabstop=2 shiftwidth=2
-autocmd FileType javascript setlocal tabstop=2 shiftwidth=2
-autocmd FileType html setlocal tabstop=2 shiftwidth=2
-autocmd FileType css setlocal tabstop=2 shiftwidth=2
-
-" Clojure
-autocmd FileType clojure setlocal tabstop=2 shiftwidth=2
 
 " Sudo to write
 cmap w!! w !sudo tee % >/dev/null
 
-" Assume Bash is my shell (:help sh.vim)
-let g:is_bash = 1
-
 " Reload all windows in all tabs, useful after I do a 'git rebase -i'
 command Reedit :tabdo windo edit!
-
-" Mac
-if has('mac')
-    set macmeta
-endif
-
-" Local config
-let vimrc_local = expand("~/.vimrc.local", ":p")
-if filereadable(vimrc_local)
-    execute 'source' vimrc_local
-endif
-unlet vimrc_local
 
 " vim: filetype=vim
